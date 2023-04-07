@@ -22,15 +22,29 @@ export const signInWithGoogle = () => {
   signInWithPopup(auth, provider)
     .then((result) => {
       // console.log(result);
-      const name = result.user.displayName
-      const email = result.user.email
-      const profilePic = result.user.photoURL
-      localStorage.setItem("name", name)
+      const name = result.user.displayName;
+      const email = result.user.email;
+      const profilePic = result.user.photoURL;
+      localStorage.setItem("name", name);
       localStorage.setItem("email", email);
       localStorage.setItem("profilePic", profilePic);
-      window.location.reload(true)
+      window.location.reload(true);
     })
     .catch((err) => {
       console.log(err);
     });
+};
+
+export const signOutWithGoogle = () => {
+  auth.signOut().then(
+    function () {
+      localStorage.removeItem("name");
+      localStorage.removeItem("email");
+      localStorage.removeItem("profilePic");
+      window.location.reload(true);
+    },
+    function (err) {
+      console.log(err);
+    }
+  );
 };

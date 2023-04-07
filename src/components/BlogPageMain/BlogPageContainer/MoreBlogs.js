@@ -1,6 +1,6 @@
 import React, { useState, useEffect , useRef} from "react";
 import { Grid } from "@mui/material";
-import MoreBlog from "../MoreBlog/MoreBlog";
+import MoreBlog from "./MoreBlog";
 function MoreBlogs({ blogList, id }) {
   const [top3Blogs, setTop3Blogs] = useState([]);
   const defaultBlogs = useRef(blogList)
@@ -10,7 +10,7 @@ function MoreBlogs({ blogList, id }) {
     });
     excludeBlogs =
       excludeBlogs.length <= 3 ? excludeBlogs : excludeBlogs.slice(0, 3);
-    setTop3Blogs(excludeBlogs);
+      setTop3Blogs(excludeBlogs);
   }, [id,blogList]);
 
   return (

@@ -1,27 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Modal, Button } from "@mui/material";
+import BlogContext from "../../../context/blog-crud-context";
 
-function InputModal({
-  open,
-  handleClose,
-  addItemHandlerv2,
-  update,
-  updateItemHandlerv2,
-  blogList,
-  id,
-}) {
+function InputModal({ open, handleClose, update, id }) {
   const [blogTopic, setBlogTopic] = useState("");
   const [blogContent, setBlogContent] = useState("");
+  const [blogDate, setBlogDate] = useState("");
+  const ctx = useContext(BlogContext);
   useEffect(() => {
     if (update) {
-      blogList.map((i) => {
+      ctx.blogList.forEach((i) => {
         if (i.id === id) {
           setBlogTopic(i.Topic);
           setBlogContent(i.Content);
+          setBlogDate(i.Date);
         }
       });
     }
-  }, [update, id]);
+    // eslint-disable-next-line
+  }, []);
 
   const BlogTopicChange = (e) => {
     setBlogTopic(e.target.value);
@@ -30,13 +27,18 @@ function InputModal({
     setBlogContent(e.target.value);
   };
   const handleSubmit = () => {
-    addItemHandlerv2({ Topic: blogTopic, Content: blogContent });
+    ctx.addItem({ Topic: blogTopic, Content: blogContent });
     setBlogTopic("");
     setBlogContent("");
     handleClose();
   };
   const handleUpdate = () => {
-    updateItemHandlerv2({ id: id, Topic: blogTopic, Content: blogContent });
+    ctx.updateItem({
+      id: id,
+      Date: blogDate,
+      Topic: blogTopic,
+      Content: blogContent,
+    });
     handleClose();
   };
   return (
@@ -58,29 +60,29 @@ function InputModal({
         </div>
         <div className='mt-4'>
           <form onSubmit={update ? handleUpdate : handleSubmit}>
-            <div class='mb-3'>
-              <label for='BlogTopic' class='form-label'>
+            <div className='mb-3'>
+              <label htmlFor='BlogTopic' className='form-label'>
                 Blog Topic
               </label>
               <input
                 onChange={BlogTopicChange}
                 type='text'
-                class='form-control'
+                className='form-control'
                 id='BlogTopic'
                 placeholder='Enter Blog Topic...'
                 defaultValue={update ? blogTopic : ""}
                 required
               />
             </div>
-            <div class='mb-3'>
-              <label for='BlogContent' class='form-label'>
+            <div className='mb-3'>
+              <label htmlFor='BlogContent' className='form-label'>
                 Blog Content
               </label>
               <textarea
                 onChange={BlogContentChange}
                 style={{ resize: "none", height: "200px" }}
                 type='text'
-                class='form-control'
+                className='form-control'
                 id='BlogContent'
                 placeholder='Enter Blog Content...'
                 defaultValue={update ? blogContent : ""}

@@ -1,17 +1,13 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import Grid from "@mui/material/Grid";
-import MoreBlogs from "../MoreBlogs/MoreBlogs";
-import CommentInput from "../CommentInput/CommentInput";
-import './BlogPage.css'
-
-
+import MoreBlogs from './MoreBlogs'
+import CommentInput from '../CommentContainer/CommentInput'
 
 function BlogPage() {
   const location = useLocation();
-  console.log(location);
-  const {itemDb,blogList} = location.state;
-  const {id,Topic, Content, Date} = itemDb;
+  const { itemDb, blogList } = location.state;
+  const { Topic, Content, Date } = itemDb;
   return (
     <div style={{ display: "flex", justifyContent: "center" }}>
       <Grid container spacing={2} style={{ width: "80%" }}>

@@ -1,29 +1,17 @@
-import React, { useState } from "react";
-import CardImage from "../../utils/images/CardImage.jpg";
-import AddIcon from "@mui/icons-material/Add";
-import InputModal from "../InputModal/InputModal";
-import { IconButton } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Icon from "@mui/material/Icon";
+import React, { useState, useContext } from "react";
+import InputModal from "../Container/InputModal";
 import { Link } from "react-router-dom";
+import BlogContext from "../../../context/blog-crud-context";
+import { Button } from "@mui/material";
 
-import { CardContent, Typography, Button } from "@mui/material";
-
-function Blog({
-  itemDb,
-  forInput,
-  addItemHandler,
-  deleteItemHandler,
-  updateItemHandler,
-  id,
-  blogList,
-}) {
+function Blog({ itemDb, forInput, id }) {
+  const ctx = useContext(BlogContext);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { Date, Content, Topic } = itemDb;
-  const deleteItemHandlerv2 = () => {
-    deleteItemHandler(id);
+  const deleteItemHandler = () => {
+    ctx.deleteItem(id);
   };
   const display = Content.length > 30 ? Content.slice(0, 30) : Content;
   return (
@@ -53,7 +41,7 @@ function Blog({
               <div className='text-[#00308F]'>
                 <Link
                   to={`/blogs/${itemDb.id}`}
-                  state={{ itemDb: itemDb, blogList: blogList }}
+                  state={{ itemDb: itemDb, blogList: ctx.blogList }}
                 >
                   Continue reading...
                 </Link>
@@ -64,7 +52,7 @@ function Blog({
                     className='w-1 p-2'
                     variant='contained'
                     color='error'
-                    onClick={deleteItemHandlerv2}
+                    onClick={deleteItemHandler}
                   >
                     <div className='text-xs'>Delete</div>
                   </Button>
@@ -81,10 +69,8 @@ function Blog({
                 <InputModal
                   update={true}
                   open={open}
-                  updateItemHandlerv2={updateItemHandler}
                   handleClose={handleClose}
                   id={id}
-                  blogList={blogList}
                 />
               </div>
             </div>
@@ -105,7 +91,6 @@ function Blog({
                 update={false}
                 open={open}
                 handleClose={handleClose}
-                addItemHandlerv2={addItemHandler}
                 itemDb={itemDb}
               />
             </div>

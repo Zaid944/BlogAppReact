@@ -1,15 +1,23 @@
-import "./App.css";
-import Navbar from "./components/Navbar/Navbar";
-import Blogs from "./components/Blogs/Blogs";
+import Navbar from "./components/Header/Navbar";
+import Blogs from "./components/Dashboard/Display/Blogs";
 import { Route, Routes } from "react-router-dom";
-import BlogPage from "./components/BlogPage/BlogPage";
+import { BlogContextProvider } from "./context/blog-crud-context";
+import BlogPage from "./components/BlogPageMain/BlogPageContainer/BlogPage";
+
 function App() {
   return (
     <>
       <Navbar />
       <Routes>
-        <Route path = "/" element = {<Blogs/>}/>
-        <Route path = "/blogs/:id" element = {<BlogPage/>}/>
+        <Route
+          path='/'
+          element={
+            <BlogContextProvider>
+              <Blogs />
+            </BlogContextProvider>
+          }
+        />
+        <Route path='/blogs/:id' element={<BlogPage />} />
       </Routes>
     </>
   );
