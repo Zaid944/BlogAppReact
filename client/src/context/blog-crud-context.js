@@ -13,7 +13,9 @@ export const BlogContextProvider = (props) => {
   const [blogList, setBlogList] = useState([]);
 
   const getBlogs = async () => {
-    const response = await axios.get("http://localhost:5000/blogs");
+    const response = await axios.get(
+      "https://blogappreact-2.onrender.com/blogs"
+    );
     console.log(response);
     setBlogList(response.data.blogs);
   };
@@ -25,7 +27,7 @@ export const BlogContextProvider = (props) => {
 
   const addItem = async (blog) => {
     console.log(blog);
-    const res = await axios.post("http://localhost:5000/blogs", {
+    const res = await axios.post("https://blogappreact-2.onrender.com/blogs", {
       Date: modifyDate(new Date()),
       Topic: blog.Topic,
       Content: blog.Content,
@@ -44,7 +46,9 @@ export const BlogContextProvider = (props) => {
   };
 
   const deleteItem = async (idDel) => {
-    const res = await axios.delete(`http://localhost:5000/blogs/${idDel}`);
+    const res = await axios.delete(
+      `https://blogappreact-2.onrender.com/blogs/${idDel}`
+    );
     console.log(res);
     const newBlogList = blogList.filter((blog) => {
       return blog._id !== idDel;
@@ -54,7 +58,7 @@ export const BlogContextProvider = (props) => {
 
   const updateItem = async (blog) => {
     const { Date, Topic, Content } = blog;
-    await axios.put(`http://localhost:5000/blogs/${blog._id}`, {
+    await axios.put(`https://blogappreact-2.onrender.com/blogs/${blog._id}`, {
       Date,
       Topic,
       Content,
